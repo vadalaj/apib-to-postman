@@ -35,7 +35,7 @@ function parseAction (group, action, auth) {
                          const key = v.substr(1)
                          const param = parameters.find(p => p.name === key)
 
-                         return { key, value: param ? param.example : '', description: param.description.trim(), type: param.type }
+                         return { key, value: param ? param.example : '', description: param.description ? param.description.trim() : 'description', type: param.type }
                        })
   const url = {
     raw: `{{HOST}}/${raw}`,
@@ -64,12 +64,12 @@ function parseAction (group, action, auth) {
     method: action.method,
     headers,
     body,
-    description: action.description
+    description: action.description || 'description'
   }
   
   return {
     name: action.name,
-    description: action.description,
+    description: action.description || 'description',
     request
   }
 }
@@ -107,7 +107,7 @@ function astToCollection (ast) {
 
   const item = ast.resourceGroups.map(group => ({
     name: group.name,
-    description: group.description,
+    description: group.description || 'description',
     item: group.resources.reduce((all, resource) => {
       const i = resource.actions.map(action => parseAction(resource, action, auth))
 
