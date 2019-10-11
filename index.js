@@ -35,7 +35,7 @@ function parseAction (group, action, auth) {
                          const key = v.substr(1)
                          const param = parameters.find(p => p.name === key)
 
-                         return { key, value: param ? param.example : '', description: param.description ? param.description.trim() : 'description', type: param.type }
+                         return { key, value: param ? param.example : '', description: param && param.description ? param.description.trim() : 'description', type: param.type }
                        })
   const url = {
     raw: `{{HOST}}/${raw}`,
